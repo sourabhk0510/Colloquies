@@ -1,0 +1,8 @@
+
+<table><% @tag.each do |t|%>
+ <tr>
+ <td><%=link_to t.name, tag_path(t.name)%></td>
+ <td><%=t.taggings_count %> questions</td>
+ </tr>
+<%end%>
+</table>

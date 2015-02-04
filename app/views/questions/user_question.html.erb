@@ -1,0 +1,13 @@
+<h2><class= "question-desc"><%= @user%></class>: My Questions</h2>
+
+<table width="100%">
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+  </tr>
+  <tr><% @questions.each do |que| %>
+    <td><%= link_to que.title, question_path(que.id) %></td>
+    <td><%= que.description %></td>
+   </tr><% end%>
+</table>
+<p><%= link_to "Back", questions_path %></p>

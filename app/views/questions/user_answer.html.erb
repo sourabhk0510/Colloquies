@@ -1,0 +1,15 @@
+<h2> <class = "question-desc"><%=@user%></class>: My answers</h2>
+
+<table width="100%">
+  <tr>
+    <th>Title</th>
+    <th>Time</th>
+  </tr>
+
+  <tr><%@answer.each do |ans|%>
+    <td><%= link_to ans.question.title, question_path(ans.question.id)%></td>
+    <td><%= ans.created_at%></td>
+  </tr><%end%>
+</table>
+
+<p><%= link_to "Back", questions_path %></p>

@@ -1,0 +1,9 @@
+.question-heading{
+	color: black;
+}
+.question-desc{color: maroon;}
+.change_color{
+	height : 100px; 
+	width : 300px; 
+	border : 1px solid #111111;
+}

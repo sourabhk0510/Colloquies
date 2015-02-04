@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Newapp" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Newapp" %>">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+<title>Clarion</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="default.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="outer">
+  <div id="header">
+    <h1><a href="#">Clarion</a></h1>
+    <h2>Forum</h2>
+  </div>
+  <div id="menu">
+    <ul>
+      <li class="first"><a href="/" accesskey="1">Home</a></li>
+      <li><%= link_to 'Tags', tag_index_path %></li>
+         <% if user_signed_in? %>
+              <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+             <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+              <% else %>
+                  <li><%= link_to 'Sign in', new_user_session_path %></li>
+                   <li><%= link_to 'Sign up', new_user_registration_path %></li>
+                   <li><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %></li>
+            <% end %>
+    </ul>
+     
+  </div>
+  <div id="content">
+    <div id="primaryContentContainer">
+      <div id="primaryContent">
+
+      
+      <%= yield %>
+    
+       </div>
+    </div>
+    <div id="secondaryContent">
+      <h3>DEVISE</h3>
+      <p>Devise is a full-featured authentication solution which handles all of the controller logic and form views for you. Learn how to set it up in this episode. <a href="#">More&#8230;</a></p>
+      <h3>Code metrics</h3>
+      <p>Code metrics is a set of software measures that provide developers better insight into the code they are developing.<a href="#">More&#8230;</a></p>
+      <h3>Ajax</h3>
+      <p>A group of interrelated Web development techniques used on the client-side to create asynchronous Web applications.<a href="#">More&#8230;</a></p>
+      <h3>My Record</h3>
+      <ul>
+        <li><%= link_to "MY Questions", user_question_questions_path %></a></li>
+        <li><%= link_to "MY Answers", user_answer_questions_path %></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="footer">
+    <p>Copyright &copy; 2006 ClarionTechnologies.co.in. Designed by <a href="http://www.freecsstemplates.org">ROR-team Clarion Technologies</a></p>
+  </div>
+</div>
+
+
+
+
+
+    </main>
+  </body>
+</html>

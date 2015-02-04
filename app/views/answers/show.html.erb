@@ -1,0 +1,6 @@
+<% @answer.each do | answer | %>
+<p><%= answer.created_at %></p>
+<p><%= answer.feedback%></p>
+<%= link_to "Edit", edit_answer_path(answer.id,{question_id: @question.id, user_id: @question.user_id}) %>
+<%end%>
+<%= link_to 'Back', questions_path %>

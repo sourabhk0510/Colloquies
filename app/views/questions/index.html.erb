@@ -1,0 +1,84 @@
+  <%if user_signed_in?%>
+  <h3><p>Welcome  <%= current_user.name%></p></h3>
+  <%end%>
+  <div class = "questions">
+  <h2 class="question-heading">Questions</h2>  
+  <% @questions.each do |question| %>
+  <table width="100%" >
+    <td width="80%"><li><%= link_to question.title, question_path(question.id)%></li>
+      <div class="description" id="<%=question.id%>"><%= question.description.truncate(65, omission: '...(More)')%></div>
+     <!-- <div id="panel_<%=question.id%>"><%= question.description%></div>  -->
+       <p>Tags: <%= raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %>
+           </p> 
+     <% if user_signed_in? %>
+    <% if policy(question).edit? %>
+      <%= link_to "Edit", edit_question_path(question) %>
+      <%= link_to "Delete", question_path(question.id), method: :delete %>
+
+       
+       <%# elsif current_user.id == question.user_id%>
+          <%#= link_to "Delete", question_path(question.id), method: :delete %>
+          <%#= link_to "Edit", edit_question_path(question.id) %>
+       <%end%>
+      <%end%>
+
+     </td>
+    <td> <%=question.view_count%> Views</td>
+    <td><%= question.answers.where(is_active: true).count %>  Answers</td>
+   
+
+  </table> 
+
+  <style> 
+#panel_<%=question.id%>
+{
+/*padding:5px;*/
+text-align:center;
+ }
+#panel_<%=question.id%>
+{
+/*padding:5px;*/
+/*display:none;*/
+height: auto;
+ overflow:hidden;
+}
+</style>
+ <% end %>
+
+ <p><%= link_to("Add New Question",  new_question_path, :class => 'action new') %> </p>
+</div>
+
+
+ <script> 
+// $(document).ready(function(){
+	
+//   $("div.des").click(function(){
+//   	var qus_id= $("div.description").attr('id');
+//   	alert("#panel_" + qus_id);
+//     if ($('div#panel_' + qus_id).data('shown')) {
+//          $(this).text('Read more..');
+//          $('div#panel_' + qus_id).animate({
+//              "height": "10px"
+//          }, 'fast');
+//          $('div#panel_' + qus_id).data('shown',false);
+//      }
+//      else {
+//          $(this).text('Read less..');
+//          $('div#panel_' + qus_id).animate({
+//              "height": $('div#panel_' + qus_id).data("orig_height")
+//          }, 'fast');
+//          $('div#panel_' + qus_id).data('shown',true);
+//      }
+//  });
+//    $('div#panel_' + qus_id).data("orig_height", $('div#panel_' + qus_id).css("height")).css({
+//      height: "10px" });
+//  });
+
+
+
+// //   var qus_id= $(this).attr('id');
+// //     $("div#panel_" + qus_id).toggle("slow");
+// //   });
+// // });
+// </script>
+

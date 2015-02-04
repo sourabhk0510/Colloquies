@@ -1,0 +1,28 @@
+<% @question_title = "New answer"  %>
+  <h2>Create Answer</h2>
+
+  <%= form_for(:answer, url: answers_path(@question.id, @question.user_id))do |f| %>
+
+    <table summary="Answer form fields">
+	  <tr>
+	    <th><%= f.label(:feedback) %></th>
+	    <td><%= f.text_field(:feedback, :size => '40*10').html_safe %></td>
+	  </tr>
+
+	  <tr>
+	    <td><%= f.hidden_field(:question_id) %></td>
+	  </tr>
+
+	  <tr>
+	    <td><%= f.hidden_field(:user_id) %></td>
+	  </tr>
+	  
+
+	  <tr>
+	    <td colspan="2"><%= f.submit "Submit" %></td>
+	  </tr>
+
+	</table>
+<%end%>
+    
+  
