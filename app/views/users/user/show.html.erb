@@ -1,0 +1,37 @@
+<h3>Taglist</h3>
+<% @tags.each do |t|%>
+ <p> <input type="checkbox" user_id="<%= @user.id %>" id="<%= t.name %>" <%= @user.tag_list.include?(t.name) ? "checked" : "none" %> > <%= t.name%> </p> 
+ <% end %>
+
+<h3>Already assign Tag for <%=@user.name %></h3>
+<div class="list"> <%= @list %> </div>
+
+ <p></p>
+ <p><%= link_to "Back", users_user_index_path %></p>
+
+<script>
+$(document).ready(function(){
+   $('input[type="checkbox"]').click(function(){
+      var id = $(this).attr('id');
+      var user_id = $(this).attr('user_id');
+      if($(this).prop("checked") == true){
+      	 var key = "marked";
+        }
+       else if($(this).prop("checked") == false){
+      	   var key = "unmarked";
+        }
+        $.ajax({
+  	    type: 'GET',
+		url: "/users/user/"+user_id +"/set_tags",
+        data: {"id": id, "user_id": user_id, "key": key},
+	 	success: function(data){
+	 	 $("div.list").html(data);
+        },
+        error: function(data){
+        }
+      });
+    });
+});
+
+</script>
+

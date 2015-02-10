@@ -1,6 +1,7 @@
   class QuestionPolicy
 
    attr_reader :user, :question
+
   def initialize(user, question)
     @user = user
     @question = question
@@ -15,7 +16,7 @@
   end
 
   def create?
-    false
+    false 
   end
 
   def new?
@@ -23,9 +24,8 @@
   end
 
   def update?
-     # binding.pry
     !@user.roles.blank? && (@user.roles.pluck(:role).include? "admin") ? true : @user.questions.include?(@question) || (
-    !@user.roles.blank? && (@user.roles.pluck(:role).include? "moderator") && (@question.tag_list.include? "RoR") ? true : false ) if @user.present?
+    !@user.roles.blank? && (@user.roles.pluck(:role).include? "moderator") && tags_check? ? true : false ) if @user.present?
   end
 
   def edit?
@@ -53,11 +53,11 @@
     end
   end
 
-  private
     
-     def user_status?
-        return (!@user.roles.blank?)
-     end
-
+  def tags_check?
+    @user.tag_list.each do  | u | 
+     return @question.tag_list.include?(u) ? true : false
+    end
+  end
 end
 

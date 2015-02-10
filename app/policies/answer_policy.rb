@@ -24,7 +24,7 @@
 
   def update?
       !@user.roles.blank? && (@user.roles.pluck(:role).include? "admin")  ? true : @user.answers.include?(@answer) || (
-      !@user.roles.blank? && (@user.roles.pluck(:role).include? "moderator") && (@answer.question.tag_list.include? "RoR") ? true : false ) if @user.present?
+      !@user.roles.blank? && (@user.roles.pluck(:role).include? "moderator") && tags_check? ? true : false ) if @user.present?
   end
 
   def edit?
@@ -52,11 +52,11 @@
     end
   end
 
-  private
-    
-     def user_status?
-        (@user && !@user.roles.blank?)
-     end
+ def tags_check?
+    @user.tag_list.each do  | u | 
+     return @answer.question.tag_list.include?(u) ? true : false
+    end
+  end
 
 end
 

@@ -2,8 +2,8 @@
 <html>
   <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "Newapp" %></title>
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Newapp" %>">
+    <title><%= content_for?(:title) ? yield(:title) : "Clarion Forum" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Clarion Forum" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -25,6 +25,9 @@
          <% if user_signed_in? %>
               <li><%= link_to 'Edit account', edit_user_registration_path %></li>
              <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+             <% if current_user.roles.pluck(:role).include? "admin"%>
+             <li><%= link_to "User Management", users_user_index_path %></li>
+             <% end %>
               <% else %>
                   <li><%= link_to 'Sign in', new_user_session_path %></li>
                    <li><%= link_to 'Sign up', new_user_registration_path %></li>

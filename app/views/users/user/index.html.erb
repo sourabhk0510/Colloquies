@@ -2,10 +2,10 @@
 
 <table border="2px">
  <tr>
-   <th> name </th>
-   <th> email</th>
-   <th> role </th>
-   <th> Actions </th>
+   <th> Name </th>
+   <th> Email</th>
+   <th> Role </th>
+   <th colspan="2"> Actions </th>
  </tr>
  <% @users.each do |user| %>
  <tr> 
@@ -13,48 +13,37 @@
    <td><%= user.email%> </td>
    <td><%= user.roles.map {|r| r.role }.join(', ') %> </td> 
    
-   <td><% if user.roles.pluck(:role).include? ("admin") %>
-      <%= link_to "remove", users_user_set_admin_path(user.id)%>  
-      <% elsif %>
+   <% if user.roles.pluck(:role).include? ("admin") %>
+      <td><%= link_to "remove", users_user_path(user.id), method: :delete %></td>
+      <td><%= link_to "asModerator", users_user_set_moderator_path(user.id)%></td>
+   <% elsif %>
       <% user.roles.pluck(:role).include? ("moderator") %>
-      <%= link_to "asAdmin", users_user_set_admin_path(user.id) %>  <a href="#openModal">OpenTags</a> 
-      <%else%><%=link_to "markadmin",users_user_set_admin_path(user.id)%> 
-      <% end %>
-   </td>
+      <td><%= link_to "asAdmin", users_user_set_admin_path(user.id) %></td>  
+      <td><%= link_to "opentag", users_user_path(user.id)%>/<%= link_to "remove", users_user_path(user.id), method: :delete %></td>
+    <% else %>
+      <td><%=link_to "asAdmin", users_user_set_admin_path(user.id)%></td>
+      <td><%= link_to "asModerator", users_user_set_moderator_path(user.id)%></td>
+   <% end %>
  </tr>
  <% end %>
 </table>
 
 
-<script>
-  $(document).ready(function () {
-
-        $("#showpopup").click(function () {
-            $("#hider").fadeIn("slow");
-            $('#popup_box').fadeIn("slow");
-        });
-        $("#buttonClose").click(function () {
-
-            $("#hider").fadeOut("slow");
-            $('#popup_box').fadeOut("slow");
-        });
-
-        });
-  </script>
-
-
 <!-- MODAL VIEW -->
-  <a href="#openModal">Open Tags</a>
+  <!-- <a href="#openModal">Open Tags</a>
 
 <div id="openModal" class="modalDialog">
     <div> <a href="#close" title="close" class="close">X</a> 
-    <% ActsAsTaggableOn::Tag.all.each do |t|%>
+    <%# ActsAsTaggableOn::Tag.all.each do |t|%>
     <p>
-       <%= check_box_tag 't_ids[]', t.id -%>
-        <%= t.name -%>
+        <%#= check_box_tag 't_ids[]', t.id -%>
+        <%#= t.name -%>
+        <%#= t.id %>
         </p>
- <% end %>
- <%= link_to "submit", edit_user_path(33) %>
+ <%# end %>
+ <%# binding.pry %>
+ <%#= link_to "submit", users_user_set_tags_path(30) %>
+
    </div>
 </div>
 
@@ -84,7 +73,7 @@
     margin: 10% auto;
     padding: 5px 20px 13px 20px;
     border-radius: 10px;
-    background: #fff;
+    background: #000000;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
@@ -110,4 +99,4 @@
 .close:hover {
     background: #00d9ff;
 }
-</style>
+</style> -->

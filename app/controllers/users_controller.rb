@@ -1,17 +1,34 @@
-class UsersController < ApplicationController
-  # before_filter :authenticate_user!
+# class UsersController < ApplicationController
+#   # before_filter :authenticate_user!
 
-  # def index
-  #   @users = User.all
-  # end
+# #  def index
+# #     user = User.includes(:roles)
+# #     @users = user.all
+# #     # @tag = ActsAsTaggableOn::Tag.all
+# #  end
 
-  # def show
-  #   @user = User.find(params[:id])
-  #   redirect_to questions_path
+# #   def edit
+    
+# #     # render('index')
+# #   end
 
-  #   # unless @user == current_user
-  #   #   redirect_to :back, :alert => "Access denied."
-  #   # end
-  # end
+  
+# #   def set_admin
+# #     user = User.find(params[:id])
+# #     user.roles.first.role == "admin"
+# #     user.save
+# #     render('index')
+# #   end
 
-end
+# #   def set_moderator
+
+# #   end
+
+# #   # def show
+# #   #   @user = User.find(params[:id])
+# #   #   redirect_to questions_path
+# #   #   # unless @user == current_user
+# #   #   #   redirect_to :back, :alert => "Access denied."
+# #   #   # end
+# #   # end
+#  end

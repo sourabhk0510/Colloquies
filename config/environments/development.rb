@@ -21,7 +21,7 @@ Rails.application.configure do
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
-  config.action_mailer.default_url_options = {:host => "localhost:3000"}
+  config.action_mailer.default_url_options = {:host => "clarionforum.com"}
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.perform_deliveries = true

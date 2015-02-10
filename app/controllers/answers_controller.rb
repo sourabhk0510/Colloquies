@@ -31,12 +31,13 @@ end
 
   def edit
      # @question = Question.find(params[:question_id])
-    @answer = Answer.find(params[:id])
+    @answer = Answer.includes(:question).find(params[:id])
+
     # authorize @answer, :edit?
   end
 
   def update
-    @answer = Answer.find(params[:id])
+    @answer = Answer.includes(:question)find(params[:id])
     if @answer.update_attributes(answer_params)
       redirect_to question_path(@answer.question_id)
     else

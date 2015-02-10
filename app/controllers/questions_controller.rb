@@ -7,7 +7,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.includes(:answers).find(params[:id])
+    # @question = Question.
     @question.view_count +=1 
     @question.save  
   end
@@ -27,7 +28,7 @@ class QuestionsController < ApplicationController
 
   def add_answer
     @question = Question.find(params[:question_id])
-    answer = Answer.new(answer_params)
+    answer = Answer.includes(:question).new(answer_params)
     answer.user_id = current_user.id
     answer.vote = 0
     answer.save
