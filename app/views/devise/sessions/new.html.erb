@@ -3,7 +3,7 @@
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 <%= f.error_notification %>
   <div class="form-inputs">
-  <table>
+  <table width="50%">
    <tr>
      <!-- <td> Email</td> -->
      <td><%= f.input :email, required: false, autofocus: true %></td>
@@ -14,12 +14,13 @@
     </tr>
     <tr>
      <td><%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %></td>
+     <td><%= link_to image_tag("gogle.jpeg"), user_omniauth_authorize_path(:google_oauth2) %></td>
     </tr>
   </table>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <p><%= f.button :submit, "Log in" %></p>
   </div>
 <% end %>
 

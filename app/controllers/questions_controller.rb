@@ -3,14 +3,18 @@ class QuestionsController < ApplicationController
   before_filter :user_only, :except => [:show, :index]
   
   def index
-     params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
+    @page = params[:page]
+     params[:tag] ? @questions = Question.tagged_with(params[:tag]).page(@page) : @questions = Question.where(:is_active => true).page(@page)
+
   end
 
   def show
+    @page = params[:page]
     @question = Question.includes(:answers).find(params[:id])
-    # @question = Question.
     @question.view_count +=1 
     @question.save  
+    @ans_pages = @question.answers
+    @paginatable_array = Kaminari.paginate_array(@ans_pages).page(params[:page]).per(10)
   end
 
   def new 
@@ -51,22 +55,26 @@ class QuestionsController < ApplicationController
 
   def update_vote
     @answer= Answer.find(params[:id])
-  
-    case params[:vote_action]
+    
+    if VoteCounter.where(user_id: params[:id_user], answer_id: params[:id], action: params[:vote_action]).present?
+      act = "performed"
+    else
+     VoteCounter.create(user_id: params[:id_user], answer_id: params[:id], action: params[:vote_action])
 
-      when "increment"
-       # @answer= Answer.find(params[:ans_id_up])
-        @answer.vote += 1
-      when "decrement"
-       # @answer= Answer.find(params[:ans_id_down])
-       @answer.vote -= 1
-     end
+      case params[:vote_action]
+        when "increment"
+         @answer.vote += 1
+        when "decrement"
+        @answer.vote -= 1
+      end
+    end
     @answer.save
-    #  # @answer_down = Answer.find(params[:ans_id_down])
-    #  # @answer_down.vote -= 1
-    # @answer_down.save
     @vote_count = @answer.vote
-    render partial: "vote_count" 
+    if act.present?
+      @act= act
+    else
+     render partial: "vote_count" 
+   end
   end
   
 
@@ -78,19 +86,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    # @question = Question.find(params[:id])
-    # if @question.update_attributes(question_params)
-    #   redirect_to question_path(@question.id)
-    # else
-    #   render('edit')
-    # end
     @question = Question.find(params[:id])
-    # authorize @question
-   if @question.update(question_params)
-    redirect_to @question
-   else
-    render :edit
-  end
+    if @question.update(question_params)
+      redirect_to @question
+      else
+      render :edit
+    end
   end
    
 
@@ -115,6 +116,10 @@ class QuestionsController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:feedback)
+  end
+
+  def vote_counter_params
+    params.require(:vote_counter).permit(:user_id, :answer_id, :action)
   end
 
   def user_only

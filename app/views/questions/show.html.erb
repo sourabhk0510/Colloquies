@@ -15,16 +15,19 @@
   </td></tr>
   </tr>
 </table>
-
+  
 <h2>Answers:</h2>
+ 
+ <p><%= paginate @paginatable_array %></p>
 
 <% @question.answers.each do | answer | %>
   <% if answer.is_active == true %>  
+
     <table width="100%">
   	<td width="5%">
-  	<div class="increment" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", data-answer_id=<%= answer.id%> > &#9650;  </div>
+  	<div class="increment" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.id %>  data-answer_id=<%= answer.id%> > &#9650;  </div>
   	<div  id="vote_answer_<%= answer.id %>"> <%= answer.vote %> </div>
-    <div class="decrement" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", data-answer_id=<%= answer.id%> > &#9660; </div>
+    <div class="decrement" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.id %>  data-answer_id=<%= answer.id%> > &#9660; </div>
     </td>
 
     <td width="80%"> <p><%= answer.feedback%></p> </td>
@@ -65,17 +68,19 @@ $(document).ready(function(){
     var vote_action = $(this).attr('class');
   	var id = $(this).attr('data-answer_id');
     var user_status = $(this).attr('user_status');
+    var id_user = $(this).attr('user-id');
     if (user_status == 'user_unavilable') {
       alert('Please Sign-in');
     } else {  
   	 $.ajax({
   	   type: 'POST',
 		   url: "/questions/update_vote",
-       data: {"id": id, "vote_action": vote_action},
+       data: {"id": id, "vote_action": vote_action, "id_user": id_user },
 	 	   success: function(data){
 	 		  $("#vote_answer_" + id).html(data);
        },
        error: function(data){
+        alert('You have already performed this action');
        }
       });
     }

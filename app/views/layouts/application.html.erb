@@ -22,17 +22,16 @@
     <ul>
       <li class="first"><a href="/" accesskey="1">Home</a></li>
       <li><%= link_to 'Tags', tag_index_path %></li>
-         <% if user_signed_in? %>
-              <li><%= link_to 'Edit account', edit_user_registration_path %></li>
-             <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
-             <% if current_user.roles.pluck(:role).include? "admin"%>
-             <li><%= link_to "User Management", users_user_index_path %></li>
-             <% end %>
-              <% else %>
-                  <li><%= link_to 'Sign in', new_user_session_path %></li>
-                   <li><%= link_to 'Sign up', new_user_registration_path %></li>
-                   <li><%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %></li>
-            <% end %>
+      <% if user_signed_in? %>
+        <li><%= link_to 'Edit account', edit_user_registration_path %></li>
+        <li><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %></li>
+        <% if current_user.roles.pluck(:role).include? "admin"%>
+          <li><%= link_to "User Management", users_user_index_path %></li>
+        <% end %>
+        <% else %>
+          <li><%= link_to 'Sign in', new_user_session_path %></li>
+          <li><%= link_to 'Sign up', new_user_registration_path %></li>
+        <% end %>
     </ul>
      
   </div>
@@ -64,10 +63,6 @@
     <p>Copyright &copy; 2006 ClarionTechnologies.co.in. Designed by <a href="http://www.freecsstemplates.org">ROR-team Clarion Technologies</a></p>
   </div>
 </div>
-
-
-
-
 
     </main>
   </body>

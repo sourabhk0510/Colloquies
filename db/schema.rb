@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129122039) do
+ActiveRecord::Schema.define(version: 20150212060110) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "feedback",    limit: 65535
@@ -88,5 +88,15 @@ ActiveRecord::Schema.define(version: 20150129122039) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "vote_counters", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "answer_id",  limit: 4
+    t.string   "action",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "vote_counters", ["user_id", "answer_id"], name: "index_vote_counters_on_user_id_and_answer_id", using: :btree
 
 end

@@ -14,6 +14,7 @@ group :development, :test do
   gem 'spring' 
   gem 'bullet'
 end
+gem 'kaminari'
 gem "pundit"
 gem 'devise'
 gem 'omniauth'

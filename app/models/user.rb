@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :questions
   has_many :roles 
+  has_many :vote_counters
   acts_as_taggable
   
  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)

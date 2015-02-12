@@ -1,27 +1,27 @@
 <h2>Sign up</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-<div class="form-inputs">
-  <table>
+ <%= f.error_notification %>
+<div class="form-input">
+  <table width="30%", cellspacing="5%">
    <tr> 
    <!-- <td> Name </td> -->
-   <td><%= f.input :name, required: true %></td>
+   <td><%= f.input :name, required: false %></td>
    </tr>
     
    <tr>
    <!-- <td> Email </td> -->
-   <td> <%= f.input :email, required: true, autofocus: true %></td>
+   <td> <%= f.input :email, required: false, autofocus: true if @validatable %></td>
    </tr>
 
     <tr>
      <!-- <td> Password </td> -->
-     <td> <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable) %></td>
+     <td> <%= f.input :password, required: false if @validatable %></td>
     </tr>
 
     <tr>
-     <!-- <td> Confirm Password </td> -->
-     <td> <%= f.input :password_confirmation, required: true %> </td>
+     <!-- <td> Confirm Password </td> -->   
+     <td> <%= f.input :password_confirmation, required: false %> </td>
     </tr>
   </table>
 </div>
