@@ -25,9 +25,9 @@
 
     <table width="100%">
   	<td width="5%">
-  	<div class="increment" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.id %>  data-answer_id=<%= answer.id%> > &#9650;  </div>
+  	<div class="increment" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.present? ? current_user.id : nil %>  data-answer_id=<%= answer.id%> > &#9650;  </div>
   	<div  id="vote_answer_<%= answer.id %>"> <%= answer.vote %> </div>
-    <div class="decrement" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.id %>  data-answer_id=<%= answer.id%> > &#9660; </div>
+    <div class="decrement" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", user-id=<%= current_user.present? ? current_user.id : nil %>  data-answer_id=<%= answer.id%> > &#9660; </div>
     </td>
 
     <td width="80%"> <p><%= answer.feedback%></p> </td>
