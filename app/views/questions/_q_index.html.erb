@@ -1,0 +1,57 @@
+<%#= link_to("Add New Question",  new_question_path, :class => 'action new') %>
+<h3 class="question-heading">All Questions</h3> 
+<% @questions.each do |question| %>
+  <table width="100%" >
+    <td width="80%"><li><%= link_to question.title, question_path(question.id)%></li>
+      <div class="description" id="<%=question.id%>"><%= question.description.truncate(65, omission: '...(More)')%></div>
+      <!-- <div id="panel_<%=question.id%>"><%= question.description%></div>  -->
+       <p>Tags: <%= raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %>
+           </p> 
+      <% if user_signed_in? %>
+        <% if policy(question).edit? %>
+          <%= link_to "Edit", edit_question_path(question) %>
+          <%#= link_to "Delete", question_path(question.id), method: :delete %>
+          <%= link_to "Delete","", :class => "delete_question", :"data-question_id" => question.id %>
+        <%# elsif current_user.id == question.user_id%>
+          <%#= link_to "Delete", question_path(question.id), method: :delete %>
+          <%#= link_to "Edit", edit_question_path(question.id) %>
+        <%end%>
+      <%end%>
+    </td>
+    <td> <%=question.view_count%> Views</td>
+    <td><%= question.answers.where(is_active: true).count %>  Answers</td>
+  </table>
+  <style> 
+    #panel_<%=question.id%>
+    {
+    /*padding:5px;*/
+    text-align:center;
+     }
+    #panel_<%=question.id%>
+    {
+    /*padding:5px;*/
+    /*display:none;*/
+    height: auto;
+     overflow:hidden;
+    }
+  </style>
+<% end %>
+
+
+<!-- To Delete Question -->
+<script>
+	$(".delete_question").click(function(){
+	  var id = $(this).attr('data-question_id');
+	  $.ajax({
+	    type: "DELETE",
+	    url: "/questions/" + id,
+	    success: function (data) {
+        $("#questions").html(data);
+        alert("Succesfully Deleted")
+     },
+     error: function (){
+        window.alert("something wrong!");
+     }
+	  });
+	});
+</script>

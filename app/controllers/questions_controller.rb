@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_filter :user_only, :except => [:show, :index]
   
   def index
-     params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
+    params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
   end
 
   def show
@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
 
   def new 
     @question = Question.new
+    render partial: "new"
   end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
   def create
@@ -33,7 +34,7 @@ class QuestionsController < ApplicationController
     answer.save
     @question.answers << answer
     #@answer = @question.answers.build
-  redirect_to question_path(@question)
+    redirect_to question_path(@question)
   end
 
 
@@ -65,7 +66,7 @@ class QuestionsController < ApplicationController
     #  # @answer_down.vote -= 1
     # @answer_down.save
     @vote_count = @answer.vote
-    render partial: "vote_count" 
+    render partial: "vote_count"
   end
   
 
@@ -98,8 +99,9 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @question.is_active = false
     @question.save
-    binding.pry
-    redirect_to questions_path
+    # binding.pry
+    @questions = params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
+    render partial: "q_index"
   end
 
   # def find_user
