@@ -2,10 +2,10 @@
   <h3><p>Welcome <%= current_user.email%></p></h3>
 <%end%>
 
-	<div id = "new_question">
+	<div id="new_question">
 	  <%= link_to "Add New Question" %>
 	</div>
-	<div id = "new_question_form"></div>
+	<div id="new_question_form"></div>
 <br/>
 
 <div class = "questions">
@@ -13,17 +13,11 @@
 </div>
 
 <script>
+$(document).ready(function(){
   $("#new_question").click(function(){
     alert("come");
-    $.ajax({
-      type: "GET",
-      url: "/questions/new",
-      success: function(data){
-        alert(data);
-      $("#new_question_form").html("<%= escape_javascript(render(:partial => 'new')) %>");
-      },
-      error: function(data){
-      }
-    });
+    $("#new_question_form").html("heloooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    
   });
+});
 </script>

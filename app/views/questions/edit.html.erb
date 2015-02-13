@@ -1,29 +1,4 @@
-<p><%= link_to("<< Back to List", question_path(@question.id), :class => 'back-link') %></p>
-<h2>Update</h2>
-<%= form_for(@question, url: question_path(@question.id)) do |f| %>
+<p><%#= link_to("<< Back to List", question_path(@question.id), :class => 'back-link') %></p>
 
-  <table>
-	  <tr>              
-	    <th><%= f.label(:title) %></th>
-	    <td><%= f.text_field(:title) %></td>
-	  </tr>
-
-	  <tr>
-	    <th><%= f.label(:description) %></th>
-	    <td><%= f.text_area(:description, :size => '40*10') %></td>
-	  </tr>
-
-	  <tr>
-	    <th><%= f.label (:tag_list), "Tags (separated by commas)" %></th>
-	    <td><%= f.text_field (:tag_list ) %></td>
-	  </tr>
-
-    <tr>
-      <td colspan="2">
-        <div class="form-buttons">
-          <%= f.submit("Update question") %> 
-        </div>
-      </td>
-    </tr>
-  </table>   
-<% end %>
+<h2>Edit Question:</h2>
+<%= render 'form' %>

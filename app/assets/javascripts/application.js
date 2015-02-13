@@ -14,3 +14,53 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+// For delete Answer
+$(function(){
+	$('.delete_post').bind('ajax:success', function() {
+		alert("coming");
+		$(this).closest('table').fadeOut();
+	});
+});
+
+
+// for Answer Point
+$(document).ready(function(){
+	$("div#updatevote").click( function() {
+	  var vote_action = $(this).attr('class');
+		var id = $(this).attr('data-answer_id');
+	  var user_status = $(this).attr('user_status');
+	  if (user_status == 'user_unavilable') {
+	    alert('Please Sign-in');
+	    }else {  
+		  $.ajax({
+	  	  type: 'POST',
+			  url: "/questions/update_vote",
+	      data: {"id": id, "vote_action": vote_action},
+		 	  success: function(data){
+		 		$("#vote_answer_" + id).html(data);
+	      },
+	      error: function(data){
+	      }
+	    });
+	  }
+	});
+});
+
+// To Delete Question
+$(document).ready(function(){
+	$(".delete_question").click(function(){
+	  var id = $(this).attr('data-question_id');
+	  $.ajax({
+	    type: "DELETE",
+	    url: "/questions/" + id,
+	    success: function (data) {
+        $("#questions").html(data);
+        alert("Succesfully Deleted")
+     },
+     error: function (){
+        window.alert("something wrong!");
+     }
+	  });
+	});
+});
