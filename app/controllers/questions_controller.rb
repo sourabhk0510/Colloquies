@@ -52,7 +52,6 @@ class QuestionsController < ApplicationController
     end
   end
 
-
   def user_question 
     @questions = current_user.questions
     @user = current_user.name
@@ -81,7 +80,6 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @question.is_active = false
     @question.save
-    # binding.pry
     @questions = params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
     render partial: "q_index"
   end
