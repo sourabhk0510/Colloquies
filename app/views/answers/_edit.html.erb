@@ -1,0 +1,11 @@
+<h3>Edit Your Answer:</h3>
+
+<%= form_for(@answer, url: answer_path(@answer.id),:remote => true) do |f| %>
+  <table>
+    <tr>
+	    <th><%= f.label :feedback,'Your Given Answer:' %></th>
+	    <td><%= f.text_area(:feedback, :size => '60*40') %></td>
+       <td><%= f.submit("Update answer") %></td>
+    </tr>
+  </table>
+<% end %>

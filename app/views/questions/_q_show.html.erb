@@ -26,7 +26,8 @@
       <tr>
         <% if user_signed_in? %>
           <% if policy(answer).edit? %> 
-            <td><%= link_to "Edit", edit_answer_path(answer.id) %></td>
+            <td><%= link_to "Edit", edit_answer_path(answer.id),:remote => true %></td>
+            <div id="answer-edit-form" style="display:none;"></div>
             <td><%= link_to 'Delete', answer_path(answer.id), :method => :delete, :remote=>true, :class=>'delete_post' %></td>
           <% end %>
         <% end %>
@@ -44,8 +45,10 @@
 <p class="color">Post Your Answer</p>
 
 <%= form_for @question.answers.build, url: add_answer_questions_path(:question_id => @question.id),:remote => true do |f| %>
-  <%= f.text_area :feedback, size: "60*40" %>
-  <%= f.submit "Submit" %>
+<table>
+  <td><%= f.text_area :feedback, size: "60*40" %></td>
+  <td><%= f.submit "Submit" %></td>
+  </table>
 <% end %>
 <br/>
 

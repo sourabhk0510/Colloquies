@@ -1,14 +1,23 @@
 class AnswersController < ApplicationController
   def edit
     @answer = Answer.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update
     @answer = Answer.find(params[:id])
-    if @answer.update_attributes(answer_params)
-      redirect_to question_path(@answer.question_id)
-    else
-      render('edit')
+    # if @answer.update_attributes(answer_params)
+    #   redirect_to question_path(@answer.question_id)
+    # else
+    #   render('edit')
+    # end
+    respond_to do |format|
+      if @answer.update_attributes(answer_params)
+        format.js
+          @question = Question.find(@answer.question_id)
+      end
     end
   end
 
