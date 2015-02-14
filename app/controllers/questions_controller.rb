@@ -14,29 +14,36 @@ class QuestionsController < ApplicationController
 
   def new 
     @question = Question.new
-    render partial: "new"
+    respond_to do |format|
+      format.js
+    end
   end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 
   def create
     @question = current_user.questions.new(question_params)
-    if @question.save
-      redirect_to questions_path
-     else
-      render('new')
+    respond_to do |format|
+      if @question.save
+        format.js
+        params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
+      end
     end
   end
 
   def edit
-     @question = Question.find(params[:id])
-     authorize @question, :edit?
+    @question = Question.find(params[:id])
+    authorize @question, :edit?
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update
     @question = Question.find(params[:id])
+    respond_to do |format|
     if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
+      format.js
+        params[:tag] ? @questions = Question.tagged_with(params[:tag]) : @questions = Question.where(:is_active => true)
+      end
     end
   end
 
@@ -86,6 +93,8 @@ class QuestionsController < ApplicationController
   
   
   private
+
+
   def question_params
     params.require(:question).permit(:user_id, :title, :description, :tag_list)
   end

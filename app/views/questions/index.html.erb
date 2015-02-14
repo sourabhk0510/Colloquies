@@ -2,22 +2,9 @@
   <h3><p>Welcome <%= current_user.email%></p></h3>
 <%end%>
 
-	<div id="new_question">
-	  <%= link_to "Add New Question" %>
-	</div>
-	<div id="new_question_form"></div>
-<br/>
+	<div><%= link_to "Add New Question",  new_question_path, :remote => true %></div>
+  <div id="question-form" style="display:none;"></div><br/>
 
 <div class = "questions">
   <%= render partial: "q_index" %>
 </div>
-
-<script>
-$(document).ready(function(){
-  $("#new_question").click(function(){
-    alert("come");
-    $("#new_question_form").html("heloooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    
-  });
-});
-</script>
