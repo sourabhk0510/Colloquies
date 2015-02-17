@@ -14,8 +14,8 @@
 <h2>Answers:</h2>
 
 <% @question.answers.each do | answer | %>
-  <% if answer.is_active == true %>  
-    <table width="100%" class = "question_answer">
+  <% if answer.is_active == true %>
+    <table width="100%" class = "question_answer_<%= answer.id%>">
      <td width="5%">
         <div class="increment" user_status=<%= current_user.present? ?  "user_available" : "user_unavilable"%> id="updatevote", data-answer_id=<%= answer.id%> > &#9650;  </div>
         <div  id="vote_answer_<%= answer.id %>"> <%= answer.vote %> </div>
@@ -45,9 +45,9 @@
 <p class="color">Post Your Answer</p>
 
 <%= form_for @question.answers.build, url: add_answer_questions_path(:question_id => @question.id),:remote => true do |f| %>
-<table>
-  <td><%= f.text_area :feedback, size: "60*40" %></td>
-  <td><%= f.submit "Submit" %></td>
+  <table>
+    <td><%= f.text_area :feedback, size: "60*40" %></td>
+    <td><%= f.submit "Submit" %></td>
   </table>
 <% end %>
 <br/>
